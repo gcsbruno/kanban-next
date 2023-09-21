@@ -85,6 +85,7 @@ export default function KanbanBoard() {
             "
         >
             <DndContext
+                sensors={sensors}
                 onDragStart={onDragStart}
                 onDragEnd={onDragEnd}>
                 <div className="m-auto flex gap-4">
@@ -123,6 +124,17 @@ export default function KanbanBoard() {
                         Add Column
                     </button>
                 </div>
+
+                {createPortal(
+                    <DragOverlay>
+                        {activeColumn && (
+                            <ColumnContainer
+                                column={activeColumn}
+                                deleteColumn={deleteColumn}
+                            />
+                        )}
+                    </DragOverlay>, document.body
+                )}
             </DndContext>
         </div>
     )

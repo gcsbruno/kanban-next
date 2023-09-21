@@ -18,7 +18,7 @@ export default function ColumnContainer(props: Props) {
     const { column, deleteColumn, updateColumn } = props
     const [editMode, setEditMode] = useState(false)
 
-    const { setNodeRef, attributes, transform, transition, isDragging } = useSortable({
+    const { setNodeRef, attributes, transform, listeners, transition, isDragging } = useSortable({
         id: column.id,
         data: {
             type: "Column",
