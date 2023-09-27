@@ -1,30 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Kanban App
 
-## Getting Started
+Kanban App is a web application built with Next.js, utilizing the Drag and Drop Kit and Tailwind CSS. This application is designed to help you manage tasks and columns efficiently using the Kanban framework. You can create new columns, add tasks, edit their content, and delete them easily, all while following best practices in React and Next.js development.
 
-First, run the development server:
+### Usage
+Once the Kanban App is up and running, you can start using it to manage your tasks and columns using the Kanban framework. Here are some key features:
 
-```bash
-yarn dev
-```
+- Create Columns: Click the "+" button to add new columns to your Kanban board.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Create Tasks: Within each column, click the "+" button to add new tasks. Drag and drop tasks between columns to update their status.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Edit Tasks: Double-click on a task to edit its content.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Delete Tasks: Click the trash icon to delete tasks.
 
-## Learn More
+- Drag and Drop: Use the Drag and Drop Kit to easily move tasks between columns to reflect their status.
 
-To learn more about Next.js, take a look at the following resources:
+### Features
+- Responsive Design: Kanban App is built using Tailwind CSS, making it responsive and visually appealing on various screen sizes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Drag and Drop: The Drag and Drop Kit enables intuitive task management by allowing you to move tasks between columns effortlessly.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Editable Content: You can edit task content in-place, making it convenient to update task details.
 
-## Deploy on Vercel
+- Delete Functionality: Easily remove tasks you no longer need with the built-in delete feature.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- React and Next.js Best Practices: Kanban App follows best practices in React and Next.js development to ensure code quality and maintainability.
