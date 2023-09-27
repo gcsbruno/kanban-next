@@ -2,23 +2,49 @@
 
 import React, { useMemo, useState } from "react";
 import PlusIcon from "./icons/PlusIcon";
-import { Column, Id } from "@/app/types";
+import { Column, Id, Task } from "@/app/types";
 import ColumnContainer from "./ColumnContainer";
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { createPortal } from "react-dom";
+import TaskCard from "./TaskCard";
 
 export default function KanbanBoard() {
 
+    const [tasks, setTasks] = useState<Task[]>([])
     const [columns, setColumns] = useState<Column[]>([])
     const columnsId = useMemo(() => columns.map((col) => col.id), [columns])
     const [activeColumn, setActiveColumn] = useState<Column | null>(null)
-
+    const [activeTask, setActiveTask] = useState<Task | null>(null)
     const sensors = useSensors(useSensor(PointerSensor, {
         activationConstraint: {
             distance: 10,
         }
     }))
+
+    function createTask(columnId: Id) {
+        const newTask: Task = {
+            id: generateId(),
+            columnId,
+            content: `Task ${tasks.length + 1}`
+        }
+
+        setTasks([...tasks, newTask])
+    }
+
+    function deleteTask(id: Id) {
+        const newTasks = tasks.filter((task) => task.id !== id)
+        setTasks(newTasks)
+    }
+
+    function updateTask(id: Id, content: string) {
+        const newTasks = tasks.map((task) => {
+            if (task.id !== id) return task;
+            return { ...task, content }
+        })
+
+        setTasks(newTasks)
+    }
 
     function createNewColumn() {
         const columnToAdd: Column = {
@@ -40,6 +66,7 @@ export default function KanbanBoard() {
 
     function updateColumn(id: Id, title: string) {
         const newColumns = columns.map((col) => {
+            if (col.id !== id) return col;
             return { ...col, title }
         });
 
@@ -50,6 +77,10 @@ export default function KanbanBoard() {
         console.log("DRAG START", event)
         if (event.active.data.current?.type === "Column") {
             setActiveColumn(event.active.data.current.column);
+            return
+        }
+        if (event.active.data.current?.type === "Task") {
+            setActiveTask(event.active.data.current.task);
             return
         }
     }
@@ -96,7 +127,11 @@ export default function KanbanBoard() {
                                     key={col.id}
                                     column={col}
                                     deleteColumn={deleteColumn}
-                                    updateColumn={updateColumn} />
+                                    updateColumn={updateColumn}
+                                    createTask={createTask}
+                                    deleteTask={deleteTask}
+                                    updateTask={updateTask}
+                                    tasks={tasks.filter(task => task.columnId === col.id)} />
                             )}
                         </SortableContext>
                     </div>
@@ -131,8 +166,20 @@ export default function KanbanBoard() {
                             <ColumnContainer
                                 column={activeColumn}
                                 deleteColumn={deleteColumn}
+                                updateColumn={updateColumn}
+                                createTask={createTask}
+                                deleteTask={deleteTask}
+                                updateTask={updateTask}
+                                tasks={tasks.filter(task => task.columnId === activeColumn.id
+                                )}
                             />
                         )}
+                        {activeTask &&
+                            <TaskCard
+                                task={activeTask}
+                                deleteTask={deleteTask}
+                                updateTask={updateTask} />
+                                }
                     </DragOverlay>, document.body
                 )}
             </DndContext>
